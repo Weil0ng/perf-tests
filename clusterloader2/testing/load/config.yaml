@@ -228,7 +228,7 @@ steps:
       apiVersion: apps/v1
       kind: Deployment
       labelSelector: group = load
-      operationTimeout: 15m
+      operationTimeout: 30m
   {{if $ENABLE_STATEFULSETS}}
   - Identifier: WaitForRunningStatefulSets
     Method: WaitForControlledPodsRunning
