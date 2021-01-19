@@ -56,6 +56,7 @@ const (
 func InitFlags(p *config.PrometheusConfig) {
 	flags.BoolEnvVar(&p.EnableServer, "enable-prometheus-server", "ENABLE_PROMETHEUS_SERVER", false, "Whether to set-up the prometheus server in the cluster.")
 	flags.BoolEnvVar(&p.TearDownServer, "tear-down-prometheus-server", "TEAR_DOWN_PROMETHEUS_SERVER", true, "Whether to tear-down the prometheus server after tests (if set-up).")
+	flags.BoolEnvVar(&p.ScrapeAnet, "prometheus-scrape-anet", "PROMETHEUS_SCRAPE_ANET", false, "Whether to scrape anet metrics.")
 	flags.BoolEnvVar(&p.ScrapeEtcd, "prometheus-scrape-etcd", "PROMETHEUS_SCRAPE_ETCD", false, "Whether to scrape etcd metrics.")
 	flags.BoolEnvVar(&p.ScrapeNodeExporter, "prometheus-scrape-node-exporter", "PROMETHEUS_SCRAPE_NODE_EXPORTER", false, "Whether to scrape node exporter metrics.")
 	flags.BoolEnvVar(&p.ScrapeKubelets, "prometheus-scrape-kubelets", "PROMETHEUS_SCRAPE_KUBELETS", false, "Whether to scrape kubelets. Experimental, may not work in larger clusters. Requires heapster node to be at least n1-standard-4, which needs to be provided manually.")
@@ -120,6 +121,7 @@ func NewPrometheusController(clusterLoaderConfig *config.ClusterLoaderConfig) (p
 		// Backward compatibility.
 		clusterLoaderConfig.PrometheusConfig.ScrapeKubeProxy = mapping["PROMETHEUS_SCRAPE_KUBE_PROXY"].(bool)
 	}
+	mapping["PROMETHEUS_SCRAPE_ANET"] = clusterLoaderConfig.PrometheusConfig.ScrapeAnet
 	mapping["PROMETHEUS_SCRAPE_KUBELETS"] = clusterLoaderConfig.PrometheusConfig.ScrapeKubelets
 	snapshotEnabled, _ := pc.isEnabled()
 	mapping["RetainPD"] = snapshotEnabled
