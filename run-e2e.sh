@@ -19,7 +19,10 @@
 set -o nounset
 set -o pipefail
 
-PERFTEST_ROOT=$(dirname "${BASH_SOURCE}")
+mkdir -p $GOPATH/src/k8s.io
+mv $GOPATH/src/github.com/Weil0ng/perf-tests $GOPATH/src/k8s.io/perf-tests
+
+PERFTEST_ROOT=$GOPATH/src/k8s.io/perf-tests
 echo "TOOL_NAME: $1"
 
 case "$1" in
