@@ -121,7 +121,11 @@ func NewPrometheusController(clusterLoaderConfig *config.ClusterLoaderConfig) (p
 		// Backward compatibility.
 		clusterLoaderConfig.PrometheusConfig.ScrapeKubeProxy = mapping["PROMETHEUS_SCRAPE_KUBE_PROXY"].(bool)
 	}
-	mapping["PROMETHEUS_SCRAPE_ANET"] = clusterLoaderConfig.PrometheusConfig.ScrapeAnet
+	if _, exists := mapping["PROMETHEUS_SCRAPE_ANET"]; !exists {
+		mapping["PROMETHEUS_SCRAPE_ANET"] = clusterLoaderConfig.PrometheusConfig.ScrapeAnet
+	} else {
+		clusterLoaderConfig.PrometheusConfig.ScrapeAnet = mapping["PROMETHEUS_SCRAPE_ANET"].(bool)
+	}
 	mapping["PROMETHEUS_SCRAPE_KUBELETS"] = clusterLoaderConfig.PrometheusConfig.ScrapeKubelets
 	snapshotEnabled, _ := pc.isEnabled()
 	mapping["RetainPD"] = snapshotEnabled

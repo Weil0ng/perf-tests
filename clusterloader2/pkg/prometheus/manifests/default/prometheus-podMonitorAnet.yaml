@@ -1,4 +1,4 @@
-{{$PROMETHEUS_SCRAPE_ANET := DefaultParam .PROMETHEUS_SCRAPE_ANET false}}
+{{$PROMETHEUS_SCRAPE_ANET := DefaultParam .PROMETHEUS_SCRAPE_ANET true}}
 
 {{if $PROMETHEUS_SCRAPE_ANET}}
 apiVersion: monitoring.coreos.com/v1
